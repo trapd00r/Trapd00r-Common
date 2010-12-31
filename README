@@ -1,0 +1,60 @@
+                 Trapd00r::Common version 0.01
+
+  Copyright 2010 Magnus Woldrich <magnus@trapd00r.se>. This program is free
+  software; you may redistribute it and/or modify it under the same terms as
+  Perl itself.
+
+  I welcome bug reports and patches for this package at magnus@trapd00r.se.
+
+BLURB
+
+  Trapd00r::Common provides functions which the author keeps on rewriting in his
+  code. This is probably not useful for you.
+
+REQUIREMENTS
+
+INSTALLATION
+
+  To install this module, run the following commands:
+
+  	perl Makefile.PL
+  	make
+  	make test
+  	make install
+
+HOMEPAGE AND SORCE REPOSITORY
+
+  The Trapd00r::Common web page at:
+
+    http://github.com/trapd00r/Trapd00r-Common
+
+  will always have the current version of this package, the current
+  documentation, and pointers to any additional resources.
+
+SUPPORT AND DOCUMENTATION
+
+  After installing, you can find documentation for this module with the
+  perldoc command.
+
+      perldoc Trapd00r::Common
+
+  You can also look for information at:
+
+      RT, CPAN's request tracker
+
+      AnnoCPAN, Annotated CPAN documentation
+
+      CPAN Ratings
+
+      Search CPAN
+
+
+LICENSE AND COPYRIGHT
+
+  Copyright (C) 2010 Magnus Woldrich
+
+  This program is free software; you can redistribute it and/or modify it
+  under the terms of either: the GNU General Public License as published
+  by the Free Software Foundation; or the Artistic License.
+
+  See http://dev.perl.org/licenses/ for more information.
