@@ -1,13 +1,18 @@
 package Trapd00r::Common;
 
-$VERSION  = '0.01';
+$VERSION  = '0.02';
 
 BEGIN {
   require Exporter;
   use vars qw(@ISA @EXPORT);
   @ISA    = 'Exporter';
-  @EXPORT = qw(invalid_regex);
-}
+  @EXPORT = qw(
+    invalid_regex
+    shell_escape
+    isa_arrayref
+    to_tty
+  );
+};
 
 use strict;
 use Carp;
@@ -20,6 +25,50 @@ $Data::Dumper::Quotekeys = 0;
 $Data::Dumper::Sortkeys  = 1;
 
 
+sub shell_escape {
+  my $string = shift;
+  my @data   = isa_arrayref($string);
+
+  map { $_ =~  s/([;<>\*\|`&\$!#\(\)\[\]\{\}:'"])/\\$1/g; } @data;
+
+  return (wantarray()) ? @data : join(' ', @data);
+}
+
+sub invalid_regex {
+  my $regex   = shift;
+  my @regexes = isa_arrayref($regex);
+
+  for my $r(@regexes) {
+    eval { qr/$r/; };
+    if($@) {
+      return 1;
+    }
+    next; # valid
+  }
+  return 0;
+}
+
+sub isa_arrayref {
+  my $string = shift;
+  my @data;
+
+  if(ref($string) eq 'ARRAY') {
+    push(@data, @{$string});
+  }
+  elsif(ref($string) eq '') {
+    push(@data, $string);
+  }
+  else {
+    return undef;
+  }
+
+  return (wantarray()) ? @data : scalar(@data);
+}
+
+sub to_tty {
+  return (-t STDOUT) ? 1 : 0;
+}
+
 
 =pod
 
@@ -29,24 +78,37 @@ Trapd00r::Common - Commonly used functions
 
 =head1 SYNOPSIS
 
-    # Imported functions into your namespace:
-    # invalid_regex()
-
 =head1 DESCRIPTION
 
 
 =head1 EXPORTS
 
-=head2 invalid_regex()
+=over 2
+
+=item invalid_regex()
 
 Parameters: $regex | \@regexes
 
-Returns: BOL
-
-  if(invalid_regex($regex)) {
+  if(invalid_regex(\@regexes)) {
+    # One or more regexes invalid
     ...
   }
 
+=item to_tty()
+
+Returns true if connected to a TTY.
+
+=item isa_arrayref()
+
+Parameters: \@array
+
+Resolves an array reference and returns an array in list context.
+
+=item shell_escape()
+
+Parameters: $string | \@strings
+
+Returns it's arguments clean from characters your shell might otherwise munch.
 
 =head1 SEE ALSO
 
