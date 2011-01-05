@@ -11,19 +11,24 @@ BEGIN {
     shell_escape
     isa_arrayref
     to_tty
+    dump
   );
 };
 
 use strict;
 use Carp;
-use Data::Dumper;
-$Data::Dumper::Terse     = 1;
-$Data::Dumper::Indent    = 1;
-$Data::Dumper::Useqq     = 1;
-$Data::Dumper::Deparse   = 1;
-$Data::Dumper::Quotekeys = 0;
-$Data::Dumper::Sortkeys  = 1;
 
+sub dump {
+  use Data::Dumper;
+  $Data::Dumper::Terse     = 1;
+  $Data::Dumper::Indent    = 1;
+  $Data::Dumper::Useqq     = 1;
+  $Data::Dumper::Deparse   = 1;
+  $Data::Dumper::Quotekeys = 0;
+  $Data::Dumper::Sortkeys  = 1;
+
+  print Data::Dumper::Dumper @_;
+}
 
 sub shell_escape {
   my $string = shift;
@@ -109,6 +114,12 @@ Resolves an array reference and returns an array in list context.
 Parameters: $string | \@strings
 
 Returns it's arguments clean from characters your shell might otherwise munch.
+
+=item dump()
+
+Parameters: Whatever
+
+Prints @_ using Data::Dumper with some must have settings enabled.
 
 =head1 SEE ALSO
 
